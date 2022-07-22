@@ -1,24 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
-import { useEffect } from 'react';
-
-const Count = () => {
-  useEffect(() => {
-    console.log('<Count />', Date.now());
-  }, []);
-
-  return (<p>123</p>);
-};
+import { useEffect, version } from 'react';
 
 function App() {
   useEffect(() => {
-    console.log('<App />', Date.now());
+    console.log('React version', version);
   }, []);
 
   return (
     <div className="App">
       <header className="App-header">
-        <Count />
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.

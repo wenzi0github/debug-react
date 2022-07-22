@@ -1,4 +1,4 @@
-# 调试 React 源码的框架
+# 调试 React18 源码的框架
 
 我们使用 [create-react-app](https://create-react-app.dev) 脚手架来调试 React 源码。
 
@@ -44,6 +44,10 @@ $ yarn install
 ## 3. 修改 React 中的相关代码
 
 react 源码在项目中无法直接使用，这里需要稍微修改下。
+
+注意，我这里的 React 的版本是`18.1.0`；若是其他版本，修改方式可能会有些差异。
+
+> 请注意 React 版本上的差异!
 
 ### 3.1 eslint 的修改
 
