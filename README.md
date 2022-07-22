@@ -13,7 +13,7 @@ $ npx create-react-app debug-react
 我们需要修改很多 webpack 相关的配置，这里把配置弹出来，修改起来更方便一些。
 
 ```shell
-yarn eject
+$ yarn eject
 ```
 
 ## 2. 引入 React 源码
@@ -59,18 +59,18 @@ react 源码在项目中无法直接使用，这里需要稍微修改下。
 ```javascript
 // 我们忽略其他未修改的属性
 module.exports = {
-  extends: [], // ['fbjs', 'prettier'], debug-react中修改
+  extends: [], // ['fbjs', 'prettier'], debug-react 的需要
   plugins: [
     'jest',
     'no-for-of-loops',
     'no-function-declare-after-return',
     'react',
-    // 'react', // debug-react中修改
+    // 'react', // debug-react 的需要
     'react-internal',
   ],
   rules: {
-    'no-unused-vars': OFF, // [ERROR, {args: 'none'}], debug-react中修改
-    'react-internal/no-production-logging': OFF, // ERROR, debug-react中修改
+    'no-unused-vars': OFF, // [ERROR, {args: 'none'}], debug-react 的需要
+    'react-internal/no-production-logging': OFF, // ERROR, debug-react 的需要
   },
 };
 ```
@@ -84,7 +84,6 @@ module.exports = {
 新增如下代码：
 
 ```javascript
-// debug-react调试仓库中添加
 export {
   unstable_flushAllWithoutAsserting,
   unstable_flushNumberOfYields,
@@ -103,8 +102,8 @@ export {
 注释掉 throw error 的代码，并新增 export 的代码：
 
 ```javascript
-// throw new Error('This module must be shimmed by a specific renderer.'); // debug-react中备份
-export * from './forks/ReactFiberHostConfig.dom'; // debug-react中修改
+// throw new Error('This module must be shimmed by a specific renderer.');
+export * from './forks/ReactFiberHostConfig.dom';
 ```
 
 #### 3.2.3 packages/shared/ReactSharedInternals.js
@@ -117,7 +116,7 @@ export * from './forks/ReactFiberHostConfig.dom'; // debug-react中修改
 // const ReactSharedInternals =
 //   React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
 
-import ReactSharedInternals from '../react/src/ReactSharedInternals'; // debug-react中修改
+import ReactSharedInternals from '../react/src/ReactSharedInternals';
 
 export default ReactSharedInternals;
 ```
@@ -138,10 +137,8 @@ export default ReactSharedInternals;
 ```javascript
 // 在文件的最底部
 
-// debug-react项目中新增
 import * as React from './src/React';
 export default React;
-// debug-react项目中新增结束
 ```
 
 #### 3.2.5 packages/react-dom/client.js
@@ -151,10 +148,8 @@ export default React;
 ```javascript
 // 在文件的最底部
 
-// debug-react项目中新增
 const ReactDOM = { createRoot, hydrateRoot };
 export default ReactDOM;
-// debug-react项目中新增结束
 ```
 
 ## 4. debug-react 的修改
