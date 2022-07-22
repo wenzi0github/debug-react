@@ -319,6 +319,26 @@ module.exports = function (webpackEnv) {
           'scheduler/tracing': 'scheduler/tracing-profiling',
         }),
         ...(modules.webpackAliases || {}),
+        react: path.resolve(__dirname, "../src/react/packages/react"),
+        "react-dom": path.resolve(__dirname, "../src/react/packages/react-dom"),
+        shared: path.resolve(__dirname, "../src/react/packages/shared"),
+        "react-reconciler": path.resolve(
+          __dirname,
+          "../src/react/packages/react-reconciler"
+        ),
+        scheduler: path.resolve(__dirname, "../src/react/packages/scheduler"),
+        "react-devtools-scheduling-profiler": path.resolve(
+          __dirname,
+          "../src/react/packages/react-devtools-scheduling-profiler"
+        ),
+        "react-devtools-shared": path.resolve(
+          __dirname,
+          "../src/react/packages/react-devtools-shared"
+        ),
+        "react-devtools-timeline": path.resolve(
+          __dirname,
+          "../src/react/packages/react-devtools-timeline"
+        ),
       },
       plugins: [
         // Prevents users from importing files from outside of src/ (or node_modules/).

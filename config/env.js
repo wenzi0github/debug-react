@@ -96,6 +96,14 @@ function getClientEnvironment(publicUrl) {
       env[key] = JSON.stringify(raw[key]);
       return env;
     }, {}),
+
+    // 新增全局变量
+    __DEV__: true,
+    __PROFILE__: true,
+    __UMD__: true,
+    __EXPERIMENTAL__: true,
+    __VARIANT__: false,
+    // 新增全局变量结束
   };
 
   return { raw, stringified };
