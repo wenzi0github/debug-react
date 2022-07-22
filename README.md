@@ -158,6 +158,10 @@ export default ReactDOM;
 
 ## 4. debug-react 的修改
 
+cra 的脚手架也需要稍微修改下。配置修改对应的 commit：[chore(config): update config to load react source](https://github.com/wenzi0github/debug-react/commit/e601994b474f8a61142b04450eae68ca13f88fd0)
+
+### 4.1 添加全局变量
+
 react 源码中有不少的全局变量，如`__DEV__`等，这里我们需要在`config/env.js`中添加上，否则会提示找不到这个全局变量。
 
 注意，我们回到了最外层的 debug-react 项目了，是修改的用`yarn eject`弹出的配置。我们在变量 stringified 中添加下述变量：
@@ -178,6 +182,49 @@ const stringified = {
   __EXPERIMENTAL__: true,
   __VARIANT__: false,
   // 新增全局变量结束
+};
+```
+
+### 4.2 添加别名 alias
+
+修改 webpack 配置中的别名 alias，用于调整引入的 React, ReactDOM 的引用位置。
+
+修改的文件： config/webpack.config.js
+
+```javascript
+// config/webpack.config.js
+
+module.exports = function () {
+  return {
+    // 新增别名
+    resolve: {
+      alias: {
+        // Support React Native Web
+        // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
+        'react-native': 'react-native-web',
+        // Allows for better profiling with ReactDevTools
+        ...(isEnvProductionProfile && {
+          'react-dom$': 'react-dom/profiling',
+          'scheduler/tracing': 'scheduler/tracing-profiling',
+        }),
+        ...(modules.webpackAliases || {}),
+
+        // 新增的 alias
+        react: path.resolve(__dirname, '../src/react/packages/react'),
+        'react-dom': path.resolve(__dirname, '../src/react/packages/react-dom'),
+        shared: path.resolve(__dirname, '../src/react/packages/shared'),
+        'react-reconciler': path.resolve(__dirname, '../src/react/packages/react-reconciler'),
+        scheduler: path.resolve(__dirname, '../src/react/packages/scheduler'),
+        'react-devtools-scheduling-profiler': path.resolve(
+          __dirname,
+          '../src/react/packages/react-devtools-scheduling-profiler',
+        ),
+        'react-devtools-shared': path.resolve(__dirname, '../src/react/packages/react-devtools-shared'),
+        'react-devtools-timeline': path.resolve(__dirname, '../src/react/packages/react-devtools-timeline'),
+        // 新增的 alias 结束
+      },
+    },
+  };
 };
 ```
 
